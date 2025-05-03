@@ -11,3 +11,5 @@ Makefile
 Makefile.in
 libtool
 stamp-h1
+config.h.in~
+configure~
