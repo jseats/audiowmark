@@ -7,6 +7,9 @@ AM_INIT_AUTOMAKE([foreign])
 AC_PROG_CXX
 LT_INIT
 
+AC_SUBST([includedir], ['${prefix}/include/audiowmark'])
+
+
 AC_C_BIGENDIAN()
 
 dnl
@@ -29,15 +32,15 @@ AC_DEFUN([AC_LIBMPG123_REQUIREMENTS],
     AC_SUBST(LIBMPG123_LIBS)
 ])
 
+
 dnl
 dnl zita resampler
 dnl
 AC_DEFUN([AC_ZITA_REQUIREMENTS],
 [
-    AC_LIB_HAVE_LINKFLAGS([zita-resampler])
-    if test "x$HAVE_LIBZITA_RESAMPLER" = "xno"; then
-        AC_MSG_ERROR([You need to install libzita-resampler to build this package.])
-    fi
+    PKG_CHECK_MODULES([ZITA], [zita-resampler >= 1.8],
+        [],   dnl 
+        [AC_MSG_ERROR([You need to install libzita-resampler ≥ 1.8 to build this package.])])
 ])
 
 dnl ffmpeg stuff
@@ -179,7 +182,9 @@ AC_LANG_POP([C++])
 # Less cluttered build output
 m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 
-AC_CONFIG_FILES([Makefile src/Makefile tests/Makefile tests/test-common.sh docs/Makefile])
+AC_CONFIG_FILES([Makefile src/Makefile tests/Makefile tests/test-common.sh docs/Makefile include/Makefile])
+AS_CASE([$host_os], [darwin*], [ AC_SUBST([MACOSX_DEPLOYMENT_TARGET], [15.0]) CPPFLAGS="$CPPFLAGS -mmacosx-version-min=15.0" LDFLAGS="$LDFLAGS -mmacosx-version-min=15.0" ]) 
+
 AC_OUTPUT
 
 # Output summary message

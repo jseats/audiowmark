@@ -1,4 +1,6 @@
 *.o
+*.lo
+*.la
 .deps/
 .libs/
 test/

@@ -2,7 +2,7 @@ AUTOMAKE_OPTIONS = dist-zstd no-dist-gzip
 
 # Home-brew Apple-silicon paths
 AM_CPPFLAGS = -I/opt/homebrew/include
-AM_LDFLAGS  = -L/opt/homebrew/lib -lzita-resampler
+AM_LDFLAGS  = -L/opt/homebrew/lib 
 
 # build & test everything (HLS included) during make distcheck
 AM_DISTCHECK_CONFIGURE_FLAGS = \
