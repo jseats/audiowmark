@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y \
 RUN cat >/usr/lib/pkgconfig/zita-resampler.pc <<'EOF'
 prefix=/usr
 exec_prefix=${prefix}
-libdir=${exec_prefix}/lib/x86_64-linux-gnu
+libdir=${exec_prefix}/local/lib
 includedir=${prefix}/include
 
 Name: zita-resampler
@@ -27,6 +27,7 @@ WORKDIR /audiowmark
 RUN ./autogen.sh
 RUN make
 RUN make install
+RUN ldconfig
 
 VOLUME ["/data"]
 WORKDIR /data
